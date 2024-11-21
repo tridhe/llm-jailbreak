@@ -152,7 +152,7 @@ const ChatbotContainer = () => {
     setShowPromptInput(false); // Hide the prompt input
     setConversationLog((prev) => [...prev, `${prompt}`]);
   
-    if (prompt.toLowerCase().includes("story")) {
+    if (prompt.toLowerCase().includes("Geschichte")) {
       // Directly go to Option 3 and tell the story
       handleOptionSelect(3,false);
     } else {
