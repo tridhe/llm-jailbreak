@@ -1,6 +1,6 @@
 // eslint-disable-next-line 
 const MESSAGES_EN = {
-  correctPassword: "Tannenbaum",
+  correctPassword: "Weihnachtsbaum",
   initialGreeting: "Hello! What's your name?",
   myName: "My name is ",
   submit: "Submit",
@@ -63,7 +63,7 @@ Leise flüsterte sie ihre Vermutung, und der Elf nickte mit einem breiten Läche
 };
 
 const MESSAGES = {
-  correctPassword: "Tannenbaum",
+  correctPassword: "Weihnachtsbaum",
   initialGreeting: "Hallo! Wie heißt du?",
   submit: "Einreichen",
   myName: "Mein Name ist ",
