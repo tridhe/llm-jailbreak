@@ -15,11 +15,8 @@ const ChatbotContainer = () => {
   const [showOptions, setShowOptions] = useState(false); // Whether to show options in Stage 2
   const [showPromptInput, setShowPromptInput] = useState(false); // Whether to show options in Stage 2
   const [showGuidelineButtons, setShowGuidelineButtons] = useState(false); // Yes/No buttons for guidelines
-  const [attempts, setAttempts] = useState(0); // Number of attempts made by the user
   const [inputVisible, setInputVisible] = useState(true); // Controls the visibility of the input field
   const [gameOver, setGameOver] = useState(false); // Whether the game is over
-
-  const maxAttempts = 3;
 
   useEffect(() => {
     setConversationLog(["Santa:"+MESSAGES.initialGreeting]);
@@ -131,19 +128,10 @@ const ChatbotContainer = () => {
           () => setGameOver(true) // End the game on a correct guess
         );
       } else {
-        const newAttempts = attempts + 1;
-        setAttempts(newAttempts);
-
-        if (newAttempts >= maxAttempts) {
-          addSantaMessage(
-            MESSAGES.finishedAttempt,
-            () => setGameOver(true) // End the game after max attempts
-          );
-        } else {
-          addSantaMessage(MESSAGES.remainingAttempt1+` ${maxAttempts - newAttempts} `+MESSAGES.remainingAttempt2, () => {
-            setInputVisible(true); // Step 4: Show input text field for another guess
-          });
-        }
+        addSantaMessage(
+          MESSAGES.retryAttempt,
+          () => setInputVisible(true)
+        );
       }
     });
   };
