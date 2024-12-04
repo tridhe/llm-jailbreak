@@ -17,6 +17,7 @@ const ChatbotContainer = () => {
   const [showGuidelineButtons, setShowGuidelineButtons] = useState(false); // Yes/No buttons for guidelines
   const [inputVisible, setInputVisible] = useState(true); // Controls the visibility of the input field
   const [gameOver, setGameOver] = useState(false); // Whether the game is over
+  const [showRetryOrHints, setShowRetryOrHints] = useState(false); // Retry or hints buttons
 
   useEffect(() => {
     setConversationLog(["Santa:"+MESSAGES.initialGreeting]);
@@ -147,11 +148,24 @@ const ChatbotContainer = () => {
       // Invalid input workflow
       addSantaMessage(MESSAGES.cantDiscloseMsg, () => {
         addSantaMessage(MESSAGES.moreOptions, () => {
-          setShowOptions(true); // Show the three options
+          setShowRetryOrHints(true) // Show the retry or hints buttons
         });
       });
     }
   };
+
+  const handleRetryOrHints = (choice) => {
+    setShowRetryOrHints(false); // Hide Retry and Hints buttons
+  
+    if (choice === "retry") {
+      setConversationLog((prev) => [...prev, MESSAGES.retryText]);
+      addSantaMessage(MESSAGES.retryResponse, () => setShowPromptInput(true)); // Show prompt input
+    } else if (choice === "hints") {
+      setConversationLog((prev) => [...prev, MESSAGES.hintsRequestText]);
+      addSantaMessage(MESSAGES.hintsResponse, () => setShowOptions(true)); // Show original three options
+    }
+  };
+
 
   return (
     <div className="chatbot-container">
@@ -170,6 +184,16 @@ const ChatbotContainer = () => {
         </div>
       )}
       {showPromptInput && <InputForm onSubmitGuess={handlePromptSubmit} />}
+      {showRetryOrHints && (
+        <div className="retry-or-hints-buttons">
+          <button className="option-button" onClick={() => handleRetryOrHints("retry")}>
+            {MESSAGES.retryText}
+          </button>
+          <button className="option-button" onClick={() => handleRetryOrHints("hints")}>
+            {MESSAGES.hintsRequestText}
+          </button>
+        </div>
+      )}
       {stage === 2 && showOptions && <OptionButtons options={options} onOptionSelect={handleOptionSelect} />}
       {stage === 3 && inputVisible && !gameOver && <InputForm onSubmitGuess={handlePasswordSubmit} />}
     </div>
