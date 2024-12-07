@@ -1,6 +1,7 @@
 // eslint-disable-next-line 
 const MESSAGES_EN = {
-  correctPassword: "Weihnachtsbaum",
+  passwordSalt: "0F1xc9o@&*Jt!#$J3rSgq9",
+  passwordHash: "96056eabb340970fdf7c0439de5b9587a299ce40162c1d940ea454c930472d48",
   initialGreeting: "Hello! What's your name?",
   myName: "My name is ",
   submit: "Submit",
@@ -61,7 +62,8 @@ Leise flüsterte sie ihre Vermutung, und der Elf nickte mit einem breiten Läche
 };
 
 const MESSAGES = {
-  correctPassword: "Weihnachtsbaum",
+  passwordSalt: "0F1xc9o@&*Jt!#$J3rSgq9",
+  passwordHash: "96056eabb340970fdf7c0439de5b9587a299ce40162c1d940ea454c930472d48",
   initialGreeting: "Hallo! Wie heißt du?",
   submit: "Einreichen",
   myName: "Mein Name ist ",
