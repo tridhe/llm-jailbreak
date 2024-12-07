@@ -6,6 +6,17 @@ import TypingIndicator from "./TypingIndicator";
 import MESSAGES from "./messages";
 import './SantaChatbot.css';
 
+// https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/digest
+async function digestMessage(message) {
+  const msgUint8 = new TextEncoder().encode(message); // encode as (utf-8) Uint8Array
+  const hashBuffer = await window.crypto.subtle.digest("SHA-256", msgUint8); // hash the message
+  const hashArray = Array.from(new Uint8Array(hashBuffer)); // convert buffer to byte array
+  const hashHex = hashArray
+    .map((b) => b.toString(16).padStart(2, "0"))
+    .join(""); // convert bytes to hex string
+  return hashHex;
+}
+
 const ChatbotContainer = () => {
   const [stage, setStage] = useState(1); // Current stage of the chatbot
   const [, setName] = useState(""); // User's name
@@ -121,9 +132,10 @@ const ChatbotContainer = () => {
     setInputVisible(false); // Step 1: Hide the input text field
 
     // Step 2: "Santa is typing..."
-    addSantaMessage(MESSAGES.checkMessage, () => {
-      // Step 3: Santa checks the password
-      if (guess.trim().toLowerCase() === MESSAGES.correctPassword.toLowerCase()) {
+    addSantaMessage(MESSAGES.checkMessage, async () => {
+      // Step 3: Santa checks the password, but this time he attended a cybersecurity seminar
+      const guessHash = await digestMessage(guess.trim().toLowerCase() + MESSAGES.passwordSalt);
+      if (guessHash === MESSAGES.passwordHash) {
         addSantaMessage(
           MESSAGES.correctPwdMsg,
           () => setGameOver(true) // End the game on a correct guess
